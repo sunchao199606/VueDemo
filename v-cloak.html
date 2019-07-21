@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>V-Cloak</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <p v-cloak>我就是 {{ message1 }} ？？？</p>
+        <p v-text="message2"></p>
+        <p v-text="html"></p>
+        <p v-cloak>{{ html }}</p>
+        <p v-html="html"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        setTimeout(() => {
+            let vm = new Vue({
+                el: '#app',
+                data: {
+                    message1: 'niu pi',
+                    message2: 'niu pi',
+                    html: '<h1>h111111111111111</h1>'
+                }
+            });
+        }, 1000)
+
+    </script>
+
+</body>
+
+</html>
