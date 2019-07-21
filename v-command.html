@@ -21,6 +21,8 @@
         <p v-text="html"></p>
         <p v-cloak>{{ html }}</p>
         <p v-html="html"></p>
+        <button id="button" v-bind:title="buttonTitle + '????????'">这是一个button</button>
+        <input v-cloak type="button" :value="input">
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
@@ -31,10 +33,19 @@
                 data: {
                     message1: 'niu pi',
                     message2: 'niu pi',
-                    html: '<h1>h111111111111111</h1>'
+                    html: '<h1>h111111111111111</h1>',
+                    input: '这是另一个按钮'
                 }
             });
-        }, 1000)
+        }, 1000);
+        let vmButton = new Vue({
+
+            el: '#button',
+            data: {
+                buttonTitle: 'buttonnnnnnnnnnnnnnnnnnnn'
+            }
+
+        });
 
     </script>
 
