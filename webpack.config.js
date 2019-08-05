@@ -1,4 +1,6 @@
 const path = require('path');
+// vue-loader 15.XX之后处理vue文件需要配置插件
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
     entry: {
@@ -10,12 +12,16 @@ module.exports = {
     },
     // 处理import的别名
     resolve: {
+        // 扩展import from 格式能够导入的文件格式
+        extensions: [".js", ".json", ".vue"],
+
         alias: {
             'vue$': 'vue/dist/vue.esm.js'
         }
     },
     module: {
         rules: [
+            // babel编译处理js文件
             {
                 test: /\.js$/,
                 include: [
@@ -24,6 +30,14 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: "babel-loader"
             },
+            // 处理.vue文件
+            {
+                test: /\.vue$/,
+                loader: "vue-loader"
+            },
         ]
-    }
+    },
+    plugins: [
+        new VueLoaderPlugin(),
+    ]
 }
