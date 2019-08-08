@@ -11,19 +11,20 @@ export default {
     return {
       message: "login component"
     };
-  },
-  //ES6 arrow function
-  data: () => {
-    return {
-      message: "login component"
-    };
-  },
-  // ES5
-  data: function() {
-    return {
-      message: "login component"
-    };
   }
+  //ES6 arrow function
+  // data: () => {
+  //   return {
+  //     message: "login component"
+  //   };
+  // },
+
+  // ES5
+  // data: function() {
+  //   return {
+  //     message: "login component"
+  //   };
+  // }
 };
 </script>
 

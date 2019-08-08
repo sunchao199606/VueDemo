@@ -1,16 +1,13 @@
 import Vue from 'vue'
+import { router } from './router'
+import App from './App'
 
-import login from './vue/login'
-// 声明
-// let login = {
-//     template: '<h2>嗒嗒滴答滴<h2>'
-// }
-let vm = new Vue({
-    el: '#app',
-    data: {
-        message: 'Hello Vue'
-    },
-    components: {
-        login: login
-    }
+let vm1 = new Vue({
+    el: '#container1',
+    router,
+    render: h => h(App),
+    // components: {
+    //     login: login
+    // }
 });
+
