@@ -3,6 +3,7 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
+    devtool: 'source-map',
     entry: {
         main: './src/main.js'
     },

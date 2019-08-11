@@ -2,7 +2,9 @@ import Vue from 'vue'
 import { router } from './router'
 import App from './App'
 
-let vm1 = new Vue({
+console.log(App);
+
+var vm1 = new Vue({
     el: '#container1',
     router,
     render: h => h(App),
@@ -10,4 +12,6 @@ let vm1 = new Vue({
     //     login: login
     // }
 });
+
+console.log(vm1);
 
