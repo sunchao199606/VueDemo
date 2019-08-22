@@ -32,6 +32,11 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: "babel-loader"
             },
+            // 处理css文件
+            {
+                test: /\.css$/,
+                loader: "css-loader"
+            },
             // 处理.vue文件
             {
                 test: /\.vue$/,
