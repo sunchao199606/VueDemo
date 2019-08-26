@@ -35,7 +35,7 @@ module.exports = {
             // 处理css文件
             {
                 test: /\.css$/,
-                loader: "css-loader"
+                use: ['style-loader', 'css-loader']
             },
             // 处理.vue文件
             {

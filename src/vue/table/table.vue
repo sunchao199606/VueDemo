@@ -1,12 +1,11 @@
 <template>
   <div>
     <table>
-      <tr v-bind:key="item.date" v-for="item in stocks">
-        <td>{{item.date}}</td>
-        <td>{{item.open_price}}</td>
-        <td>{{item.close_price}}</td>
-        <td>{{item.trade_num}}</td>
-        <td>{{item.trade_money}}</td>
+      <tr>
+        <th v-bind:key="key" v-for="(value,key) in stocks[0]">{{key}}</th>
+      </tr>
+      <tr v-bind:key="index" v-for="(item ,index) in stocks">
+        <td v-bind:key="key" v-for="(value,key) in item">{{value}}</td>
       </tr>
     </table>
   </div>
@@ -27,14 +26,20 @@ export default {
       this.$http
         .get("/sz-sh-stock-history", {
           params: {
-            begin: "2019-08-15",
+            begin: "2019-08-01",
             code: 600183,
-            end: "2019-08-21"
+            end: "2019-08-24"
           }
         })
         .then(response => {
-          this.stocks = response.data.showapi_res_body.list;
-          console.log(response.data);
+          let stocks = response.data.showapi_res_body.list;
+          Array.prototype.sort.call(stocks, (a, b) => {
+            let d1 = Date.parse(a.date);
+            let d2 = Date.parse(b.date);
+            return d1 > d2 ? 1 : d1 === d2 ? 0 : -1;
+          });
+          this.stocks = stocks;
+          // console.log(response.data);
         })
         .catch(err => {
           console.log(err);
@@ -43,8 +48,7 @@ export default {
   }
 };
 </script>
-
-<style lang="css">
+<style lang="css" scoped>
 table {
   border: 2px solid #42b983;
   border-radius: 3px;
@@ -68,38 +72,6 @@ th,
 td {
   min-width: 120px;
   padding: 10px 20px;
-}
-
-th.active {
-  color: #fff;
-}
-
-th.active .arrow {
-  opacity: 1;
-}
-
-.arrow {
-  display: inline-block;
-  vertical-align: middle;
-  width: 0;
-  height: 0;
-  margin-left: 5px;
-  opacity: 0.66;
-}
-
-.arrow.asc {
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-bottom: 4px solid #fff;
-}
-
-.arrow.dsc {
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 4px solid #fff;
-}
-
-#search {
-  margin-bottom: 10px;
+  align-content: center;
 }
 </style>
