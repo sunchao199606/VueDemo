@@ -32,15 +32,24 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: "babel-loader"
             },
-            // 处理css文件
+            // 处理scss文件
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                test: /\.scss$/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
             },
             // 处理.vue文件
             {
                 test: /\.vue$/,
                 loader: "vue-loader"
+            },
+            // 处理.svg文件
+            {
+                test: /\.svg$/,
+                include: path.resolve(__dirname, 'src/icons'),
+                loader: "svg-sprite-loader",
+                options: {
+                    symbolId: 'icon-[name]'
+                }
             },
         ]
     },
