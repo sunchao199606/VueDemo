@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./lib/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <div ref="vue.set">
+            <input v-model="default1" @input="" type="text">
+            <input v-model="obj.name" @input="" type="text">
+        </div>
+        <div ref="nextTick">
+            {{nextTick.message}}
+        </div>
+
+    </div>
+    <script>
+        function sleep(interval) {
+            let date = new Date();
+            let endInstant = date.getTime() + interval;
+            while (new Date().getTime() < endInstant) {
+
+            }
+        }
+        var nextTick = {
+            message: '未更新'
+        };
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                default1: '1111',
+                obj: {
+
+                },
+                nextTick
+            },
+            methods: {
+                log() {
+                    console.log(this.default1)
+                },
+                log2() {
+                    console.log(this.default2)
+                },
+                updateMessage: async function () {
+                    this.nextTick.message = '已更新';
+                    console.log(this.$refs.nextTick.textContent) // => '未更新'
+                    await this.$nextTick()
+                    console.log(this.$refs.nextTick.textContent) // => '已更新'
+                }
+            },
+        });
+        // vue不允许动态添加根级响应式属性
+        //  vm.$set(data, 'name', 'name'); 
+        vm.$set(vm.obj, 'name', 'name');
+        // 修改响应式属性
+        setTimeout(() => {
+            vm.updateMessage();
+        }, 2000);
+    </script>
+</body>
+
+</html>
