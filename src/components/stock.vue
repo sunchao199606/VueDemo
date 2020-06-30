@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div id="inputarea">
+      <label for="code">请输入股票代码：</label>
+      <input type="text" name="stockcode" id="code" v-model="code" />
+      <label for="date">请选择股票起日期：</label>
+      <input type="date" name="stockstartdate" id="startdate" v-model="startdate" />到
+      <input type="date" name="stockenddate" id="enddate" v-model="enddate" />
+      <button v-on:click="fetchData">查询股票详情</button>
+    </div>
+
     <table>
       <tr>
         <th v-bind:key="key" v-for="(value,key) in stocks[0]">{{key}}</th>
@@ -15,6 +24,9 @@
 export default {
   data() {
     return {
+      code: 600063,
+      startdate: "2020-06-01",
+      enddate: "2020-06-08",
       stocks: []
     };
   },
@@ -23,26 +35,29 @@ export default {
   },
   methods: {
     fetchData: function() {
+      console.log(parseInt(this.code));
       this.$http
         .get("/sz-sh-stock-history", {
           params: {
-            begin: "2019-08-01",
-            code: 600183,
-            end: "2019-08-24"
+            begin: this.startdate,
+            code: parseInt(this.code),
+            end: this.enddate
           }
         })
         .then(response => {
-          let stocks = response.data.showapi_res_body.list;
-          Array.prototype.sort.call(stocks, (a, b) => {
-            let d1 = Date.parse(a.date);
-            let d2 = Date.parse(b.date);
-            return d1 > d2 ? 1 : d1 === d2 ? 0 : -1;
-          });
-          this.stocks = stocks;
-          // console.log(response.data);
+          let body = response.data.showapi_res_body;
+          if (body.ret_code === 0) {
+            let stocks = response.data.showapi_res_body.list;
+            Array.prototype.sort.call(stocks, (a, b) => {
+              let d1 = Date.parse(a.date);
+              let d2 = Date.parse(b.date);
+              return d1 > d2 ? 1 : d1 === d2 ? 0 : -1;
+            });
+            this.stocks = stocks;
+          }
         })
         .catch(err => {
-          console.log(err);
+          console.log(`server 返回数据失败`);
         });
     }
   }
@@ -50,6 +65,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 table {
+  text-align: center;
   border: 2px solid #42b983;
   border-radius: 3px;
   background-color: #fff;
