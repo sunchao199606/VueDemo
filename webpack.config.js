@@ -3,13 +3,16 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
+    mode: 'development',
     devtool: 'source-map',
     entry: {
         main: './src/main.js'
     },
     output: {
+        library: "app",
+        libraryTarget: "amd",
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].bundle.js'
+        filename: 'app.js'
     },
     // 处理import的别名
     resolve: {
