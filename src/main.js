@@ -15,6 +15,7 @@ Vue.use(ElementUI);
 
 var vm1 = new Vue({
     el: '#container1',
+    data(){return{}},
     router,
     render: h => h(App),
     // components: {
