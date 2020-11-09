@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>filter</title>
+    <script src="../../lib/vue-resolved.js"></script>
+</head>
+<body>
+<div id="app">{{ message | filter2 | filter1 }}</div>
+<div id="mount-point"></div>
+<script>
+    Vue.filter('filter1', function (text) {
+        return text.toUpperCase()
+    })
+    // let Profile = Vue.extend({
+    //     template: '<p>{{firstName}} {{lastName}} aka {{alias}}</p>',
+    //     data: function () {
+    //         return {
+    //             firstName: 'Walter',
+    //             lastName: 'White',
+    //             alias: 'Heisenberg'
+    //         }
+    //     }
+    // })
+    // //console.log(Profile)
+    // let vm = new Profile({})
+    // //console.log(Profile)
+    // vm.$mount('#mount-point')
+    let filter1 = Vue.filter('filter1')
+    let vm = new Vue({
+        el: "#app",
+        //template:""
+        data() {
+            return {
+                message: "sunHCoa"
+            }
+        },
+        filters: {
+            filter2(text) {
+                return text.toLowerCase()
+            }
+        }
+    })
+    console.log(vm)
+</script>
+</body>
+</html>
