@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>观察者模式</title>
+</head>
+<body>
+<script>
+    // 观察者
+    function Observer(name, observable) {
+        this.name = name
+        observable.register(this)
+    }
+
+    Observer.prototype.update = function (state) {
+        console.log(this.name, "收到状态:", state)
+    }
+
+    // 被观察者
+    function Observable() {
+        this.state = ""
+        this.observers = []
+    }
+
+    // 原型中的this指向当前实例
+    Observable.prototype.setState = function (state) {
+        this.state = state
+    }
+    Observable.prototype.getState = function () {
+        return this.state
+    }
+    Observable.prototype.register = function (observer) {
+        this.observers.push(observer)
+    }
+    Observable.prototype.update = function () {
+        this.observers.forEach(observer => observer.update(this.state))
+    }
+
+    let observable = new Observable()
+    let lebron = new Observer("lebron", observable)
+    let anthony = new Observer("anthony", observable)
+    // 被观察者的状态变更
+    observable.setState('cooked')
+    // 发布状态变更
+    observable.update()
+</script>
+</body>
+</html>
