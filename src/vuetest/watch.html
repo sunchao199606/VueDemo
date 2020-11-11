@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="vue-resolved.js"></script>
+    <title>Watch</title>
+</head>
+<body>
+
+<div id="app" name='outerName'>AAAAA<input v-model="message"></input><child :message="message"></child></div>
+<script>
+    Vue.component("child", {
+        template: "<p>{{ message }}</p>",
+        props: ["message"],
+        watch: {
+            message(nv, ov) {
+                console.log("子组件：", nv, ov)
+            }
+        }
+    })
+    let vm = new Vue({
+        el: '#app',
+        props: ['name'],
+        data() {
+            return {
+                message: "message",
+                array: ["1", "2"]
+            }
+        },
+        watch: {
+            message(nv, ov) {
+                console.log("父组件", nv, ov)
+            },
+            name(nv, ov) {
+                console.log(nv, ov)
+            }
+        },
+        computed: {
+            reverse() {
+                return this.message.reverse()
+            }
+        },
+        methods: {
+            reverse() {
+                return this.message.reverse()
+            }
+        },
+        beforeCreate() {
+            console.log("before create")
+        },
+        created() {
+            console.log("created")
+        },
+        beforeMount() {
+            console.log("before mount")
+        },
+        mounted() {
+            console.log("mounted")
+        },
+        beforeUpdate() {
+            console.log("before update")
+        },
+        updated() {
+            console.log("updated")
+        },
+        beforeDestroy() {
+            console.log("before destroy")
+        },
+        destroyed() {
+            console.log("destroyed")
+        },
+        deactivated() {
+        }
+    })
+
+
+</script>
+</body>
+</html>
