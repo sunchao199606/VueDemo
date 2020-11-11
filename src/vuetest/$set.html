@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="vue-resolved.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+<script>
+    let vm = new Vue({
+        //el:'app'
+        template: '<p>{{ name.firstName }} {{ name.lastName }}</p>',
+        data() {
+            return {
+                name: {
+                    firstName: 'sun'
+                }
+            }
+        },
+        beforeUpdate() {
+            console.log("before update")
+        }
+    })
+    vm.$mount("#app")
+    // 动态添加属性
+    setTimeout(() => vm.$set(vm.name, 'lastName', "chao"), 2000)
+</script>
+</body>
+</html>
