@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="vue-resolved.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<h3>$attr表示当前组件标签实例中所有未被props声明的属性
+    <br>提供子组件中获取父组件中值的方法
+    <br>子组件设置inheritAttrs: false表示在dom上不渲染属性，但是在子组件中仍然可以可以通过this.$attrs获取
+</h3>
+<div id="app">
+    <child :name='name' :age="age" :gender="gender">
+
+    </child>
+
+</div>
+<script>
+    Vue.component('child', {
+        props: ['name'],
+        // 取消继承属性
+        inheritAttrs: false,
+        template: '<p>{{name}}<grandson v-bind = "$attrs"></grandson></p>',
+        data() {
+            return {}
+        },
+        created() {
+            console.log(this.$attrs)
+        }
+    })
+    Vue.component('grandson', {
+        props: ['name'],
+        data() {
+            return {}
+        },
+        template: '<p>pp{{name}}</p>',
+        created() {
+            console.log(this.$attrs)
+        }
+    })
+    let vm = new Vue({
+        el: '#app',
+        //template: '<p attr = "test">{{ name.firstName }} {{ name.lastName }}</p>',
+        data() {
+            return {
+                name: "sun chao",
+                age: "24",
+                gender: "male"
+            }
+        }
+    })
+</script>
+</body>
+</html>
