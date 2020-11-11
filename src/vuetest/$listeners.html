@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="vue-resolved.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <child @changename="changeName" :name="name"></child>
+</div>
+<script>
+    Vue.component('child', {
+        props: ['name'],
+        // 取消继承属性
+        inheritAttrs: false,
+        template: '<p>{{name}}<grandson v-on = "this.$listeners"></grandson></p>',
+        data() {
+            return {}
+        },
+        created() {
+            console.log(this.$attrs)
+            console.log(this.$listeners)
+        }
+    })
+    Vue.component('grandson', {
+        data() {
+            return {
+                newName: ""
+            }
+        },
+        template: '<div><input v-model="newName"><button @click = "changeParentName">修改父组件的name</button></div>',
+        created() {
+            console.log(this.$attrs)
+        },
+        methods: {
+            changeParentName() {
+                console.log(this.$listeners)
+                this.$emit('changename', this.newName)
+            }
+        }
+    })
+    let vm = new Vue({
+        el: '#app',
+        //template: '<p attr = "test">{{ name.firstName }} {{ name.lastName }}</p>',
+        data() {
+            return {
+                name: "sun chao",
+                age: "24",
+                gender: "male"
+            }
+        },
+        methods: {
+            changeName(newName) {
+                console.log(newName)
+                this.name = newName
+            }
+        }
+    })
+</script>
+</body>
+</html>
