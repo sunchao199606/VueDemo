@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="vue.js"></script>
+    <title>$children</title>
+    <style>
+        .child {
+            height: 100px;
+            background-color: greenyellow;
+            margin: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+<div id="root">
+    <child></child>
+    <child></child>
+    <child></child>
+</div>
+<script>
+    let rootVm = new Vue({
+        components: {
+            child: {
+                data() {
+                    return {
+                        name: "child"
+                    }
+                },
+                template: '<div class="child">{{name}}<grandson></grandson><grandson></grandson></div>',
+                components: {
+                    grandson: {
+                        data() {
+                            return {
+                                name: "grandson"
+                            }
+                        },
+                        template: '<div>{{name}}</div>'
+                    }
+                }
+            }
+        },
+        el: '#root',
+        data() {
+            return {}
+        }
+    })
+</script>
+</body>
+</html>
