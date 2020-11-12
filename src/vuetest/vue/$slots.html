@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$slots</title>
+    <script src="../vue.js"></script>
+    <style>
+        .top {
+            height: 100px;
+            background-color: #28a745;
+        }
+
+        .bottom {
+            height: 150px;
+            background-color: rebeccapurple;
+        }
+    </style>
+</head>
+<body>
+<h4>
+    插槽(相当于一个占位符，组件标签之间的内容)，
+    <br>插槽内容都是在本作用域中编译的，在本作用域编译完成之后将编译完成的内容直接传递给插槽，即插槽中只允许访问本实例中的数据
+    <br>默认插槽:
+    <br>具名插槽:在一个template元素上使用v-slot指令，并以v-slot:name形式提供其名称
+    <br>作用域插槽:v-slot:name =
+    "scope".为了让子组件中的数据在父级的插槽内容中可用，可以将子组件的数据作为slot元素的一个attribute绑定上去。绑定在slot元素上的attribute被称为插槽prop。在父级作用域中，可以使用带值的v-slot：default来定义名字
+</h4>
+<div id="root">
+    <my-component v-slot="childProp">
+        <!--        <template v-slot:top>-->
+        <!--            <button>{{ name }}</button>-->
+        <!--        </template>-->
+        <!--        <template v-slot:bottom>-->
+        <!--            <input></input>-->
+        <!--        </template>-->
+        <!--        <template>-->
+        <!--            <button>button</button>-->
+        <!--        </template>-->
+        <h1>{{ childProp.text }}</h1>
+    </my-component>
+</div>
+<script>
+    Vue.component('my-component', {
+        // template: '<div>' +
+        //     '<div class="top"><slot name="top"></slot></div>' +
+        //     '<div class="bottom"><slot name="bottom"></slot></div>' +
+        //     '</div>',.-
+        props: ['inner'],
+        data() {
+            return {
+                text: "my-component"
+            }
+        },
+        template: '<div><slot v-bind:text="text"></slot></div>',
+        created() {
+            console.log(this.$slots)
+            console.log(this.$scopedSlots)
+        },
+        mounted() {
+            console.log(this.$slots)
+            console.log(this.$scopedSlots)
+        }
+    })
+    let vm = new Vue({
+        el: "#root",
+        data() {
+            return {
+                name: 'root'
+            }
+        }
+    })
+</script>
+</body>
+</html>
