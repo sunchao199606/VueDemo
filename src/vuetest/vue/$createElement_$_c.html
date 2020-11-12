@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$createElement</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+<h3>
+    $_c以及$createElement为创建vNode的函数返回值为vNode或者vNode数组.框架内部调用前者，后者暴露给用户调用
+    <br>在vm.$mount阶段触发执行，vm._render()函数里面执行 render函数其实就是构造vNode的过程，mount过程其实就是vNode里面的数据同步到DOM上的过程
+    <br>入参为tag,data(vNode),children,normalizationType
+</h3>
+<div id="root"></div>
+<script>
+    let vm = new Vue({
+        el: "#root",
+        data() {
+            return {
+                name: "name"
+            }
+        },
+        template: '<div>{{name}}</div>'
+    })
+</script>
+</body>
+</html>
