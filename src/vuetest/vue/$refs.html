@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$refs</title>
+    <script src="../vue.js"></script>
+    <style>
+        .child {
+            height: 100px;
+            background-color: greenyellow;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<h4>ref 被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 $refs 对象上。
+    如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例：</h4>
+<div id="root"></div>
+<script>
+    let vm = new Vue({
+        components: {
+            child: {
+                data() {
+                    return {
+                        name: "child"
+                    }
+                },
+                template: '<div class="child">{{name}}<grandson ref="grandson"></grandson><grandson></grandson></div>',
+                components: {
+                    grandson: {
+                        data() {
+                            return {
+                                name: "grandson"
+                            }
+                        },
+                        template: '<div>{{name}}</div>'
+                    }
+                },
+                created() {
+                    console.log(this.$refs)
+                }
+            }
+        },
+        template: '<div><!-- `vm.$refs.p` will be the DOM node -->\n' +
+            '<p ref="p">hello</p>\n' +
+            '\n' +
+            '<!-- `vm.$refs.child` will be the child component instance -->\n' +
+            '<child v-for = "(number,index) in [1,2,3]" :key = "index" ref="child"></child></div>',
+        el: '#root',
+        created() {
+            console.log(this.$refs)
+        }
+    })
+</script>
+</body>
+</html>

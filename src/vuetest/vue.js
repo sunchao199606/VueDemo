@@ -5081,7 +5081,7 @@
         // 在Vue实例的构造函数原形上添加init方法
         Vue.prototype._init = function (options) {
             var vm = this;
-            console.log(this)
+
             // a uid
             vm._uid = uid$3++;
 
@@ -5133,6 +5133,7 @@
             if (vm.$options.el) {
                 vm.$mount(vm.$options.el);
             }
+            console.log(this)
         };
     }
 
